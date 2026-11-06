@@ -1,3 +1,5 @@
+import { isSameRequestOrigin } from '../utils/request-origin'
+
 const attempts = new Map<string, { count: number; until: number }>()
 export default defineEventHandler(event => {
   const pathname = getRequestURL(event).pathname
@@ -6,13 +8,8 @@ export default defineEventHandler(event => {
   if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(event.method)) {
     const origin = getHeader(event, 'origin')
     const host = getHeader(event, 'host')
-    if (origin) {
-      let originHost = ''
-      try {
-        originHost = new URL(origin).host
-      } catch {}
-      if (!host || originHost !== host) throw createError({ statusCode: 403, statusMessage: '请求来源无效' })
-    }
+    if (origin && !isSameRequestOrigin(origin, host))
+      throw createError({ statusCode: 403, statusMessage: '请求来源无效' })
   }
   if (pathname.endsWith('/api/auth/wechat/qr')) {
     const now = Date.now()
