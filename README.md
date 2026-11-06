@@ -13,11 +13,31 @@ pnpm dev
 
 打开 `http://localhost:5567`。不登录也可以在本机学习；仙宠、灵物和切磋需要微信登录并连接同一个服务端。静态生成的站点不包含账号和游戏接口。
 
+正式部署时，先在服务器安装 PM2（例如 `npm install -g pm2@latest`），并在项目根目录配置 `.env.production`（可参考 `.env.production.example`），然后运行：
+
+```bash
+pnpm install --frozen-lockfile
+pnpm build
+pnpm start
+```
+
+`pnpm start` 使用 `pm2.json` 启动单个守护进程，并在 Node.js 启动前读取 `.env.production`。启动命令应从项目根目录执行；系统环境变量优先于文件中的同名配置。常用管理命令：
+
+```bash
+pm2 status
+pm2 logs wordsbattle
+pm2 restart pm2.json
+pm2 stop wordsbattle
+```
+
+如需开机自启，先运行 `pm2 startup` 并执行其提示的命令，再运行 `pm2 save`。该服务需要持久化服务器，不能用 `pnpm generate` 的静态产物替代。
+
+
 ## 微信登录
 
-需要已开通网页授权的微信公众号，并在公众号后台配置网页授权域名，按微信要求将域名验证文件放到站点根目录。编辑项目根目录的 `.env`，填写 `WECHAT_APP_ID`、`WECHAT_APP_SECRET` 和 `WECHAT_CALLBACK_URL`；文件已加入 `.gitignore`。如果文件不存在，可从 `.env.example` 复制。
+需要已开通网页授权的微信公众号，并在公众号后台配置网页授权域名，按微信要求将域名验证文件放到站点根目录。开发环境编辑项目根目录的 `.env`，正式部署编辑 `.env.production`，填写 `WECHAT_APP_ID`、`WECHAT_APP_SECRET` 和 `WECHAT_CALLBACK_URL`；两个文件均已加入 `.gitignore`。如果文件不存在，可分别从 `.env.example` 和 `.env.production.example` 复制。
 
-回调地址需要是手机可访问的 HTTPS 地址，例如 `https://你的域名/api/auth/wechat/callback`；使用部署子路径时，在 `/api` 前加入子路径。服务端从启动目录读取 `.env`，系统环境变量优先。不要提交真实密钥。电脑显示一次性二维码，手机通过微信扫码授权后，电脑建立登录会话。本机 `localhost` 无法单独完成微信授权。
+回调地址需要是手机可访问的 HTTPS 地址，例如 `https://你的域名/api/auth/wechat/callback`；使用部署子路径时，在 `/api` 前加入子路径。生产启动命令从启动目录读取 `.env.production`，系统环境变量优先。不要提交真实密钥。电脑显示一次性二维码，手机通过微信扫码授权后，电脑建立登录会话。本机 `localhost` 无法单独完成微信授权。
 
 ## 仙宠玩法
 

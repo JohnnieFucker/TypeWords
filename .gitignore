@@ -37,6 +37,7 @@ report.html
 .env
 .env.*
 !.env.example
+!.env.production.example
 public/vscode
 apps/TypeWordsMiniApp
 *.tsbuildinfo

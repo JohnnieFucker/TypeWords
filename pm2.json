@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "wordsbattle",
+      "cwd": ".",
+      "script": "node",
+      "interpreter": "none",
+      "args": ["--env-file=.env.production", ".output/server/index.mjs"],
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false
+    }
+  ]
+}
