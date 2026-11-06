@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { createWechatTicket, credentials, session, verifyLegacy } from './db'
+import { createWechatTicket } from './db'
 
 export function wechatConfig() {
   const appid = process.env.WECHAT_APP_ID || ''
@@ -35,17 +35,9 @@ export function ticketCookie(event: H3Event) {
   if (!match) throw createError({ statusCode: 400, statusMessage: '二维码已失效，请刷新' })
   return { id: match[1], verifier: match[2] }
 }
-export async function newTicket(event: H3Event, body: any) {
+export async function newTicket(event: H3Event) {
   const config = wechatConfig()
-  let bindUserId: number | undefined
-  if (body?.username || body?.password) {
-    const legacy = credentials(body.username, body.password)
-    bindUserId = verifyLegacy(legacy.username, legacy.password).id
-  } else if (body?.bind === true) {
-    bindUserId = session(event)?.id
-    if (!bindUserId) throw createError({ statusCode: 401, statusMessage: '请先验证原账号' })
-  }
-  const ticket = createWechatTicket(bindUserId)
+  const ticket = createWechatTicket()
   setCookie(event, 'typewords_wechat_ticket', `${ticket.id}.${ticket.verifier}`, {
     httpOnly: true,
     secure: true,

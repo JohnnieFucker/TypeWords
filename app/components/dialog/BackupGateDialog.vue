@@ -21,7 +21,7 @@ async function onBackup() {
   if (disabled) {
     return Toast.success('已跳过导出')
   }
-  await exportData('已自动备份数据', 'TypeWords数据备份.zip')
+  await exportData('已自动备份数据', 'WordsBattle数据备份.zip')
 }
 </script>
 

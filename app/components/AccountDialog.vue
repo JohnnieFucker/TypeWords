@@ -24,7 +24,6 @@ async function logout() {
     <div class="account-popover">
       <span class="account-label">当前账号</span>
       <strong>{{ account.user.value?.startsWith('wx_') ? '微信用户' : account.user.value }}</strong>
-      <NuxtLink v-if="!account.user.value?.startsWith('wx_')" to="/?bind=1" class="account-hint">绑定微信</NuxtLink>
       <span class="account-hint">学习完成后自动同步</span>
       <p v-if="account.error.value" class="account-error" role="alert">{{ account.error.value }}</p>
       <button type="button" :disabled="signingOut" @click="logout">{{ signingOut ? '正在退出…' : '退出登录' }}</button>

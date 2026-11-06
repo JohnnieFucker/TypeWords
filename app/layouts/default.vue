@@ -36,7 +36,7 @@ const { locales, setLocale } = useI18n()
 const route = useRoute()
 
 const showIcon = $computed(() => {
-  return ['/words', '/setting'].includes(route.path)
+  return ['/words', '/setting', '/pet'].includes(route.path)
 })
 
 const account = useAccountProgress()
@@ -71,6 +71,7 @@ onUnmounted(() => window.removeEventListener('online', retrySync))
         <NuxtLink to="/words" v-if="route.path === '/setting'" :aria-label="$t('words')">
           <BaseIcon :title="$t('words')"><IconFluentTextUnderlineDouble20Regular /></BaseIcon>
         </NuxtLink>
+        <NuxtLink v-if="route.path !== '/pet'" to="/pet" class="pet-link">✳ 仙宠</NuxtLink>
         <AccountDialog />
         <NuxtLink to="/setting" :aria-label="$t('setting')">
           <BaseIcon :title="$t('setting')"><IconFluentSettings20Regular /></BaseIcon>
@@ -116,6 +117,13 @@ onUnmounted(() => window.removeEventListener('online', retrySync))
   border: 1px solid var(--color-line);
   border-radius: 0.8rem;
   background: var(--color-second);
+}
+.pet-link {
+  padding: 0.5rem 0.65rem;
+  color: var(--color-link);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 .language-menu {
   position: relative;

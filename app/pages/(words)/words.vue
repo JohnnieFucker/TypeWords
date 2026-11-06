@@ -561,7 +561,7 @@ onUnmounted(() => {
 <template>
   <BasePage>
     <header class="study-header">
-      <div><span class="study-kicker">YOUR DAILY PRACTICE</span><h1>今天，也一起进步。</h1><p>每一个单词，都是积累的开始。</p></div>
+      <div><span class="study-kicker">WORDSBATTLE · DAILY PRACTICE</span><h1>今天，也一起进步。</h1><p>完成学习，收获灵物，陪仙宠一起成长。</p></div>
       <span class="study-header-mark" aria-hidden="true">✳</span>
     </header>
     <div class="my-100 text-4xl font-bold text-red" v-if="isOldHost">

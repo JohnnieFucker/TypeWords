@@ -12,35 +12,21 @@ const initializationError = ref('')
 const qrError = ref('')
 const qrImage = ref('')
 const qrLoading = ref(false)
-const legacy = ref(false)
-const username = ref('')
-const password = ref('')
-const route = useRoute()
 let pollTimer: ReturnType<typeof setTimeout> | undefined
 let disposed = false
 let generation = 0
 
-useSeoMeta({ title: 'Type Words · 每天，记住一点新东西' })
+useSeoMeta({ title: 'WordsBattle · 一起修炼，一起成长' })
 
-async function createQr(bind = false) {
+async function createQr() {
   const currentGeneration = ++generation
   clearTimeout(pollTimer)
   qrError.value = ''
   qrImage.value = ''
   qrLoading.value = true
   try {
-    const bound = localStorage.getItem('typewords-local-account')
-    if (legacy.value && bound && bound !== username.value.trim().toLowerCase()) {
-      throw new Error('本地数据属于其他账号，请使用原账号绑定或使用独立浏览器。')
-    }
-    const body = legacy.value
-      ? { username: username.value.trim(), password: password.value }
-      : bind
-        ? { bind: true }
-        : {}
     const result = await $fetch<{ url: string }>(withAppBaseURL('/api/auth/wechat/qr'), {
       method: 'POST',
-      body,
       timeout: 10000,
     })
     const QRCode = await import('qrcode')
@@ -52,7 +38,6 @@ async function createQr(bind = false) {
     })
     if (disposed || currentGeneration !== generation) return
     qrImage.value = image
-    password.value = ''
     if (!disposed && currentGeneration === generation) pollTimer = setTimeout(() => poll(currentGeneration), 2000)
   } catch (error: any) {
     if (currentGeneration === generation)
@@ -73,7 +58,7 @@ async function poll(currentGeneration: number) {
       qrLoading.value = true
       const bound = localStorage.getItem('typewords-local-account')
       if (bound && bound !== result.username) {
-        qrError.value = '本地学习数据属于其他账号，请使用原账号绑定微信，或使用独立浏览器。'
+        qrError.value = '本地学习数据属于其他账号，请使用独立浏览器登录。'
         qrLoading.value = false
         return
       }
@@ -102,15 +87,8 @@ onMounted(async () => {
     await init()
     await account.initialize()
     ready.value = true
-    if (account.user.value && route.query.bind !== '1') await navigateTo('/words')
-    else if (
-      !account.user.value &&
-      localStorage.getItem('typewords-local-account') &&
-      !/^wx_[a-f0-9]{32}$/.test(localStorage.getItem('typewords-local-account') || '')
-    ) {
-      legacy.value = true
-      qrError.value = '检测到旧账号，请验证原账号并绑定微信。'
-    } else await createQr(route.query.bind === '1')
+    if (account.user.value) await navigateTo('/words')
+    else await createQr()
   } catch {
     initializationError.value = '本地学习数据加载失败，请刷新页面重试。'
   } finally {
@@ -126,15 +104,15 @@ onUnmounted(() => {
 
 <template>
   <main class="welcome">
-    <section class="welcome-story" aria-label="Type Words">
+    <section class="welcome-story" aria-label="WordsBattle">
       <div class="brand">
-        <span class="brand-mark">tw<span>.</span></span
-        ><span>TYPE WORDS</span>
+        <span class="brand-mark">wb<span>.</span></span
+        ><span>WORDSBATTLE</span>
       </div>
       <div class="story-copy">
-        <span class="eyebrow"><span class="eyebrow-line"></span> YOUR DAILY PRACTICE</span>
-        <h1>Words grow<br /><em>with you.</em></h1>
-        <p>把单词留在指尖，<br />把每天的积累，变成看得见的进步。</p>
+        <span class="eyebrow"><span class="eyebrow-line"></span> LEARN · GROW · BATTLE</span>
+        <h1>Words grow<br /><em>with magic.</em></h1>
+        <p>把单词留在指尖，<br />和你的仙宠，一起修炼成长。</p>
       </div>
       <div class="word-note" aria-hidden="true">
         <span class="note-index">A LITTLE EVERY DAY</span>
@@ -150,58 +128,17 @@ onUnmounted(() => {
         <span class="form-kicker">WELCOME BACK</span>
         <h2 id="welcome-title">欢迎回来。</h2>
         <p class="form-description">用微信扫一扫，继续你的单词旅程。</p>
-        <div v-if="!legacy" class="qr-area">
+        <div class="qr-area">
           <div class="qr-frame">
             <img v-if="qrImage" :src="qrImage" alt="微信登录二维码" width="200" height="200" />
             <div v-else class="qr-placeholder">{{ qrLoading ? '正在生成二维码…' : '二维码不可用' }}</div>
           </div>
           <p class="qr-caption">打开微信扫一扫，完成授权</p>
-          <button type="button" class="text-button" :disabled="qrLoading" @click="createQr(route.query.bind === '1')">
-            刷新二维码
-          </button>
+          <button type="button" class="text-button" :disabled="qrLoading" @click="createQr()">刷新二维码</button>
         </div>
-        <form v-else class="auth-form legacy-form" @submit.prevent="createQr()">
-          <p class="form-hint">验证旧账号后扫码，将原有学习进度绑定到微信。</p>
-          <label for="username">原用户名</label>
-          <input id="username" v-model="username" required minlength="3" maxlength="32" autocomplete="username" />
-          <label for="password">原密码</label>
-          <input
-            id="password"
-            v-model="password"
-            required
-            type="password"
-            minlength="8"
-            maxlength="128"
-            autocomplete="current-password"
-          />
-          <button class="submit-button" type="submit" :disabled="qrLoading">
-            <span>{{ qrLoading ? '正在验证…' : '验证并生成二维码' }}</span
-            ><span aria-hidden="true">↗</span>
-          </button>
-          <div v-if="qrImage" class="qr-area">
-            <div class="qr-frame"><img :src="qrImage" alt="绑定微信二维码" width="200" height="200" /></div>
-            <p class="qr-caption">打开微信扫一扫，完成绑定</p>
-          </div>
-        </form>
         <p v-if="initializationError || qrError || account.error.value" class="form-error" role="alert">
           {{ initializationError || qrError || account.error.value }}
         </p>
-        <button
-          type="button"
-          class="text-button legacy-toggle"
-          :disabled="qrLoading"
-          @click="
-            legacy = !legacy
-            generation++
-            qrLoading = false
-            qrError = ''
-            qrImage = ''
-            clearTimeout(pollTimer)
-            if (!legacy) createQr()
-          "
-        >
-          {{ legacy ? '返回微信登录' : '已有旧账号？绑定微信' }}
-        </button>
         <div class="guest-line">
           <span>想先试一试？</span
           ><button type="button" :disabled="!ready || !!initializationError" @click="navigateTo('/words')">
@@ -209,7 +146,7 @@ onUnmounted(() => {
           </button>
         </div>
       </div>
-      <div class="form-footer"><span>MADE FOR CURIOUS MINDS</span><span>© TYPE WORDS</span></div>
+      <div class="form-footer"><span>MADE FOR CURIOUS MINDS</span><span>© WORDSBATTLE</span></div>
     </section>
   </main>
 </template>
@@ -388,72 +325,11 @@ onUnmounted(() => {
   color: #78877a;
   font-size: 14px;
 }
-.auth-form {
-  display: flex;
-  flex-direction: column;
-}
-.auth-form label {
-  margin: 0 0 9px;
-  color: #3c5144;
-  font-size: 13px;
-  font-weight: 650;
-}
-.auth-form input {
-  box-sizing: border-box;
-  width: 100%;
-  height: 50px;
-  padding: 0 15px;
-  margin-bottom: 22px;
-  border: 1px solid #dce2d6;
-  border-radius: 7px;
-  color: #263c32;
-  background: #fbfaf5;
-  font: inherit;
-  font-size: 14px;
-  outline: none;
-}
-.auth-form input::placeholder {
-  color: #a7b0a3;
-}
-.auth-form input:focus-visible {
-  border-color: #66856a;
-  box-shadow: 0 0 0 3px #66856a25;
-}
-.form-hint,
 .form-error {
-  margin: -8px 0 17px;
+  margin: 0 0 17px;
   font-size: 12px;
   line-height: 1.5;
-  color: #7c8d7d;
-}
-.form-error {
   color: #a3483e;
-}
-.submit-button {
-  min-height: 52px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 18px;
-  border: 0;
-  border-radius: 7px;
-  color: #f4f6ed;
-  background: #315c43;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.18s ease;
-}
-.submit-button:hover:not(:disabled) {
-  background: #244a36;
-}
-.submit-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-.submit-button span:last-child {
-  font-size: 18px;
 }
 .qr-area {
   display: flex;
@@ -495,12 +371,6 @@ onUnmounted(() => {
 .text-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-.legacy-toggle {
-  margin-top: 12px;
-}
-.legacy-form {
-  margin-top: 28px;
 }
 .guest-line {
   margin-top: 25px;
@@ -556,11 +426,6 @@ onUnmounted(() => {
   }
   .form-top {
     display: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .submit-button {
-    transition: none;
   }
 }
 </style>

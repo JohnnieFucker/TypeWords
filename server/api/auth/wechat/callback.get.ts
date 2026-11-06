@@ -32,10 +32,8 @@ export default defineEventHandler(async event => {
       !/^[A-Za-z0-9_-]{1,128}$/.test(result.openid)
     )
       throw new Error('wechat authorization failed')
-    const ok = completeWechatTicket(state, config.appid, result.openid)
-    return ok
-      ? '<!doctype html><meta name="viewport" content="width=device-width"><p>授权成功，请返回电脑继续学习。</p>'
-      : '<!doctype html><meta name="viewport" content="width=device-width"><p>绑定失败，请返回电脑查看原因。</p>'
+    completeWechatTicket(state, config.appid, result.openid)
+    return '<!doctype html><meta name="viewport" content="width=device-width"><p>授权成功，请返回电脑继续学习。</p>'
   } catch {
     failWechatTicket(state)
     throw createError({ statusCode: 502, statusMessage: '微信授权失败，请返回电脑重新扫码' })

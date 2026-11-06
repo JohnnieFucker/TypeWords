@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     baseURL: appBaseURL,
     // keepalive: true,
     head: {
-      title: 'Type Words — 免费英语单词练习 | Free English Typing Practice', // default fallback title
+      title: 'WordsBattle — 背单词，养仙宠', // default fallback title
       htmlAttrs: {
         lang: 'zh-CN',
       },

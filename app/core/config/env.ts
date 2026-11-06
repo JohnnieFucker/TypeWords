@@ -7,7 +7,7 @@ export const Host = 'typewords.cc'
 export const Old_Host = '2study.top'
 export const EMAIL = 'zyronon@163.com'
 export const Origin = `https://${Host}`
-export const APP_NAME = 'Type Words'
+export const APP_NAME = 'WordsBattle'
 export const IS_DEV = import.meta.env.MODE === 'development'
 
 const common = {
