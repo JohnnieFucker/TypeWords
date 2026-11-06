@@ -383,7 +383,7 @@ onBeforeUnmount(() => {
     position: absolute;
     top: 50%;
     height: 6px;
-    background-color: #409eff;
+    background-color: var(--color-select-bg);
     border-radius: 2px;
     transform: translateY(-50%);
     pointer-events: auto;
@@ -403,7 +403,7 @@ onBeforeUnmount(() => {
     width: 16px;
     height: 16px;
     background-color: #fff;
-    border: 2px solid #409eff;
+    border: 2px solid var(--color-select-bg);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     cursor: grab;
@@ -412,7 +412,7 @@ onBeforeUnmount(() => {
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 5px #409eff;
+      box-shadow: 0 0 5px var(--color-select-bg);
       cursor: grabbing;
     }
   }

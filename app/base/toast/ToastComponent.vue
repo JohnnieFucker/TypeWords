@@ -183,7 +183,8 @@ html.dark {
 }
 
 .message-action {
-  @apply ml-2 shrink-0 cp text-sm font-medium px-2 py-0.5 rounded color-blue;
+  @apply ml-2 shrink-0 cp text-sm font-medium px-2 py-0.5 rounded;
+  color: var(--color-link);
   border: 1px solid currentColor;
   background: transparent;
   line-height: 1.4;

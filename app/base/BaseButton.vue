@@ -26,18 +26,18 @@ defineEmits(['click'])
 
 <style>
 :root {
-  --btn-primary: rgb(75, 85, 99);
-  --btn-primary-disabled: #90969e;
-  --btn-primary-hover: rgb(105, 121, 143);
-  --btn-info: white;
-  --btn-info-hover: #eaeaea;
-  --btn-orange: #facc15;
-  --btn-orange-hover: #bfac61;
+  --btn-primary: #315c43;
+  --btn-primary-disabled: #9aafa0;
+  --btn-primary-hover: #244a36;
+  --btn-info: #fbfaf5;
+  --btn-info-hover: #edf2e8;
+  --btn-orange: #d5dfbc;
+  --btn-orange-hover: #c5d5a9;
 }
 
 html.dark {
-  --btn-info: #1b1b1b;
-  --btn-info-hover: #3a3a3a;
+  --btn-info: #263b2f;
+  --btn-info-hover: #3a5241;
 }
 </style>
 
@@ -115,7 +115,7 @@ html.dark {
 
   &.info {
     background: var(--btn-info);
-    border: 1px solid var(--color-main-text);
+    border: 1px solid var(--color-line);
     color: var(--color-main-text);
 
     &:hover:not(.disabled) {
@@ -124,7 +124,7 @@ html.dark {
   }
 
   &.text {
-    border: 1px solid var(--color-main-text);
+    border: 1px solid var(--color-line);
     color: var(--color-main-text);
 
     &:hover:not(.disabled) {

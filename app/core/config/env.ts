@@ -37,10 +37,6 @@ export const DICT_LIST = {
     ALL: ENV.RESOURCE_URL + `/list/word.json`,
     RECOMMENDED: ENV.RESOURCE_URL + `/list/recommend_word.json`,
   },
-  ARTICLE: {
-    ALL: ENV.RESOURCE_URL + `/list/article.json`,
-    RECOMMENDED: ENV.RESOURCE_URL + `/list/recommend_article.json`,
-  },
 }
 
 export const SoundFileOptions = [

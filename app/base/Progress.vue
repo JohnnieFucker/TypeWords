@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<IProps>(), {
   showText: true,
   textInside: false,
   strokeWidth: 6,
-  color: '#409eff',
+  color: '#729b72',
   active: true,
   format: (percentage) => `${percentage}%`,
   size: 'normal',

@@ -76,6 +76,7 @@ export default defineNuxtConfig({
         ],
       }),
       Icons({
+        compiler: 'vue3',
         autoInstall: true,
       }),
     ],

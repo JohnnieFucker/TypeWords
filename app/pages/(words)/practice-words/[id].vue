@@ -39,6 +39,7 @@ import { createStudyTask } from '@/core/composables/practice-words/study-task.ts
 import PrevAndNextWord from '@/components/word/PrevAndNextWord.vue'
 import type { PracticeNotifier } from '@/core/composables/practice-words/practice-flow-types.ts'
 import { usePracticeWordSession } from '@/core/composables/practice-words/usePracticeWordSession.ts'
+import { useAccountProgress } from '@/core/composables/useAccountProgress'
 
 const settingStore = useSettingStore()
 const runtimeStore = useRuntimeStore()
@@ -278,7 +279,7 @@ async function loadDict() {
 
 async function initData(initVal?: TaskWords, init: boolean = false) {
   isIniting.value = true
-  //只有初始化时，才读取缓存（本地 + 可选 Supabase）
+  //只有初始化时，才读取缓存（本地）
   if (init) {
     let d = runtimeStore.routeData
     if (!d) {
@@ -363,6 +364,7 @@ async function complete() {
       }
 
       await wordPersistence.clear()
+      await useAccountProgress().complete([...taskWords.new, ...taskWords.review].map(item => item.word).filter(word => !data.excludeWords.includes(word)))
 
       let trackData = {
         funSpend: Date.now() - start,

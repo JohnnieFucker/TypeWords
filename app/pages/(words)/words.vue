@@ -560,16 +560,20 @@ onUnmounted(() => {
 
 <template>
   <BasePage>
+    <header class="study-header">
+      <div><span class="study-kicker">YOUR DAILY PRACTICE</span><h1>今天，也一起进步。</h1><p>每一个单词，都是积累的开始。</p></div>
+      <span class="study-header-mark" aria-hidden="true">✳</span>
+    </header>
     <div class="my-100 text-4xl font-bold text-red" v-if="isOldHost">
       已启用新域名
       <a class="mr-4" :href="`${Origin}/words?from_old_site=1`">{{ Origin }}</a
       >当前 2study.top 域名将在 7 月 3 号停止使用
     </div>
 
-    <div class="card flex flex-col md:flex-row gap-4">
+    <div class="card overview-card flex flex-col md:flex-row gap-4">
       <div class="flex-1 flex flex-col justify-between">
         <div class="flex gap-3">
-          <div class="p-1 center rounded-full bg-white">
+          <div class="p-1 center rounded-full bg-third">
             <IconFluentBookNumber20Filled class="text-xl color-link" />
           </div>
           <div @click="goDictDetail(store.sdict)" class="text-2xl font-bold cursor-pointer">
@@ -631,7 +635,7 @@ onUnmounted(() => {
       <div class="flex-1 mt-4 md:mt-0" :class="!store.sdict.id && 'opacity-30 cursor-not-allowed'">
         <div class="flex justify-between">
           <div class="flex items-center gap-2">
-            <div class="p-2 center rounded-full bg-white">
+            <div class="p-2 center rounded-full bg-third">
               <IconFluentStar20Filled class="text-lg color-amber" />
             </div>
             <div class="text-xl font-bold">
@@ -644,7 +648,7 @@ onUnmounted(() => {
           </div>
           <div class="flex gap-1 items-center" v-if="store.sdict.id">
             {{ $t('daily_goal') }}
-            <div style="color: #ac6ed1" class="bg-third px-2 h-10 flex center text-2xl rounded">
+            <div style="color: var(--color-link)" class="bg-third px-2 h-10 flex center text-2xl rounded">
               {{ store.sdict.id ? store.sdict.perDayStudyNumber : 0 }}
             </div>
             {{ $t('words_count') }}
@@ -908,12 +912,22 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
+.study-header { display: flex; justify-content: space-between; align-items: end; padding: 2.6rem 1px 1.7rem; }
+.study-kicker { color: var(--color-link); font-size: .65rem; font-weight: 700; letter-spacing: .18em; }
+.study-header h1 { margin: .65rem 0 .35rem; color: var(--color-reverse-black); font: 600 2rem/1.2 'Songti SC', Georgia, serif; letter-spacing: -.04em; }
+.study-header p { margin: 0; color: var(--color-sub-text); font-size: .9rem; }
+.study-header-mark { color: var(--color-link); font-size: 1.6rem; opacity: .65; }
+.overview-card { gap: 2rem; padding: 1.7rem; }
+@media (min-width: 768px) { .overview-card > div + div { border-left: 1px solid var(--color-line); padding-left: 2rem; } }
+@media (max-width: 768px) { .study-header { padding: 4rem .5rem 1.3rem; } .study-header h1 { font-size: 1.7rem; } .overview-card { padding: 1.2rem; } }
+
 .stat {
   @apply w-49% box-border flex flex-col items-center justify-center rounded-xl p-2 bg-[var(--bg-history)];
-  border: 1px solid gainsboro;
+  border: 1px solid var(--color-line);
 
   .num {
-    @apply color-[#409eff] text-4xl font-bold;
+    @apply text-4xl font-bold;
+    color: var(--color-link);
   }
 
   .txt {

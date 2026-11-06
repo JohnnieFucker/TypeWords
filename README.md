@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <b>Learn English, one keystroke at a time; smarter memorization, more efficient learning - an open-source word and article practice tool</b>
+  <b>Learn English, one keystroke at a time; smarter memorization, more efficient learning - an open-source word practice tool</b>
 </p>
 
 ## Project Introduction
@@ -32,7 +32,6 @@
 <https://typewords.cc>
 
 <img width="1920" height="1440" alt="practice words" src="/public/imgs/words.png" />
-<img width="1920" height="1440" alt="practice articles" src="/public/imgs/articles.png" />
 
 ## Features
 
@@ -42,12 +41,6 @@
 - Smart mode: Automatically calculates learning words based on memory curves, deepening memory through dictation
 - Free mode: No restrictions, plan your own learning
 - Provides phonetics, pronunciation (American/British), example sentences, phrases, synonyms, root words, etymology, error statistics, and more
-
-### Article Memorization
-
-- Built-in classic textbooks; you can also add or import articles with one-click translation and bilingual comparison
-- Follow-along + dictation dual modes, sentence-by-sentence input with automatic pronunciation for more efficient memorization
-- Supports listening while writing from memory to reinforce learning
 
 ### Favorites, Wrong Words, Mastered
 
@@ -108,3 +101,17 @@ Of course, sponsorship is not required for use—sharing the project, submitting
 <img width="300" height="390" alt="practice words" src="/public/imgs/zhifubao.png" />
 <img width="300" height="390" alt="practice words" src="/public/imgs/weixin.png" />
 
+
+## 内置账号和学习进度同步
+
+运行环境需要 Node.js 22.13 或更高版本。使用 `pnpm install` 和 `pnpm dev` 启动后，可通过首页的微信二维码登录；完成学习任务后，学习记录会同步到运行该服务的服务器。其他设备需要访问同一个服务器并登录同一账号。学习中断时的进度和个人设置保存在当前浏览器，不会实时同步。
+
+服务器使用 SQLite，默认数据库位置是项目目录下的 `.data/typewords.sqlite`，可通过 `TYPEWORDS_DATA_DIR` 环境变量指定持久化目录。部署时需要持久化并备份该目录（包括 SQLite 的 WAL 文件），同时使用 HTTPS。静态生成的站点没有账号接口，无法使用同步。原用户名密码账号可在登录页验证后绑定微信，原学习进度保持不变。退出账号后本地数据仍保留，同一浏览器配置文件中的本地学习数据绑定首次登录的账号；使用其他账号请使用独立浏览器配置文件。
+
+跨设备合并以较大的词典学习位置和较新的单词复习状态为准；删除单词或将学习位置回退目前不会同步到其他设备。自定义词典仅同步单词原文，不同步释义、例句等内容。
+
+### 微信公众号扫码登录配置
+
+需要已开通网页授权的微信公众号，并在公众号后台配置与回调地址一致的网页授权域名；按微信要求将域名验证文件放在站点根目录。在项目根目录的 `.env` 文件中配置 `WECHAT_APP_ID`、`WECHAT_APP_SECRET` 和 `WECHAT_CALLBACK_URL`；该文件已被 Git 忽略。如文件不存在，可从 `.env.example` 复制。回调地址必须是 HTTPS，格式为 `https://你的域名/api/auth/wechat/callback`；如使用部署子路径，应在 `/api` 前加入该子路径。服务端从启动目录的 `.env` 读取配置；已有系统环境变量优先。AppSecret 仅供服务端使用，不要提交到代码仓库。
+
+电脑生成一次性二维码，手机通过微信扫码，在微信内完成公众号网页授权；授权成功后返回电脑，电脑建立登录会话。旧账号可选择“已有旧账号？绑定微信”，验证原用户名和密码后扫码；已有微信账号不能绑定到另一个旧账号。扫码登录需可被手机访问的 HTTPS 服务，单独访问本机 `localhost` 无法完成授权。

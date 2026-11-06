@@ -2,19 +2,19 @@
 @use 'shepherd.css';
 
 :root {
-  --color-reverse-white: white;
-  --color-reverse-black: black;
-  --bg-history: white;
-  --color-item-border: rgb(226, 226, 226);
+  --color-reverse-white: #fbfaf5;
+  --color-reverse-black: #263c32;
+  --bg-history: #f3f5ed;
+  --color-item-border: #dce3d8;
 
-  --color-tooltip-bg: white;
-  --color-font-2: rgb(46, 46, 46);
-  --color-font-3: rgb(102, 116, 135);
+  --color-tooltip-bg: #fbfaf5;
+  --color-font-2: #334a3b;
+  --color-font-3: #78897a;
   --color-font-active-1: white;
   --color-scrollbar: #c1c1c1;
 
   --color-sub-gray: #c0bfbf;
-  --aside-width: 4.5rem;
+  --aside-width: 0px;
 
   --article-width: 50vw;
   --article-toolbar-width: 50vw;
@@ -30,73 +30,77 @@
   --word-panel-margin-left: calc(50vw + var(--aside-width) / 2 + var(--toolbar-width) / 2 + 1rem);
   --anim-time: 0.5s;
 
-  --color-input-color: black;
-  --color-input-bg: white;
-  --color-input-border: #bfbfbf;
+  --color-input-color: #263c32;
+  --color-input-bg: #fbfaf5;
+  --color-input-border: #d7e0d4;
   --color-input-icon: #d3d4d7;
 
-  --color-textarea-bg: white;
-  --color-article: black;
+  --color-textarea-bg: #fbfaf5;
+  --color-article: #263c32;
 
 
-  --font-family: -apple-system, sans-serif;
+  --font-family: 'Avenir Next', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --word-font-family: ui-monospace, sans-serif;
   --en-article-family: Georgia, sans-serif;
   --zh-article-family: 'Songti SC', 'SimSun', 'Noto Serif CJK SC', serif;
 
-  --color-primary: #e6e8eb;
-  --color-primary2: white;
-  --color-second: rgb(247, 247, 247);
-  --color-third: rgb(228, 230, 232);
-  --color-fourth: rgb(218, 220, 222);
-  --color-fifth: rgb(253, 246, 236);
+  --color-primary: #f1f2e9;
+  --color-primary2: #fbfaf5;
+  --color-second: #fbfaf5;
+  --color-third: #eaf0e5;
+  --color-fourth: #dde8d9;
+  --color-fifth: #edf2e6;
 
   //--color-card-active: #FED7AA;
-  --color-card-active: rgb(253, 246, 236);
-  --color-sub-text: gray;
-  --color-main-text: rgb(91, 91, 91);
-  --color-select-bg: rgb(12, 140, 233);
+  --color-card-active: #edf3e7;
+  --color-sub-text: #78897a;
+  --color-main-text: #344a3b;
+  --color-select-bg: #467553;
 
-  --color-progress-bar: #d1d5df;
+  --color-progress-bar: #e1e9dc;
 
-  --color-label-bg: whitesmoke;
-  --color-link: #2563eb;
+  --color-label-bg: #edf2e9;
+  --color-link: #42714f;
 
-  --color-card-bg: white;
+  --color-card-bg: #fbfaf5;
 
-  --bg-card-primary: white;
-  --bg-card-secend: rgb(247, 247, 247);
+  --bg-card-primary: #fbfaf5;
+  --bg-card-secend: #f1f4ed;
 
-  --bg-book: rgb(226 232 240);
+  --bg-book: #e9eee3;
 
-  --color-line: rgb(226, 226, 226);
+  --color-line: #dfe6da;
 
-  --color-translate-main: black;
-  --color-translate-second: #818181;
+  --color-translate-main: #263c32;
+  --color-translate-second: #7a8b7a;
 
   --book-width: 9.6rem;
-  --book-border: rgb(225, 217, 217);
+  --book-border: #d7e1d2;
 }
 
 html.dark {
-  --color-reverse-white: black;
-  --color-reverse-black: white;
+  --color-reverse-white: #182820;
+  --color-reverse-black: #e7efe2;
 
-  --color-primary: #202124;
-  --color-second: #292a2d;
-  --color-third: #35373a;
-  --color-fourth: rgb(70, 70, 70);
-  --color-fifth: rgb(84, 84, 84);
+  --color-primary: #182820;
+  --color-second: #22352a;
+  --color-third: #2d4335;
+  --color-fourth: #3a5241;
+  --color-fifth: #3e5644;
 
-  --color-card-active: rgb(84, 84, 84);
-  --color-sub-text: #b8b8b8;
-  --color-main-text: rgba(249, 250, 251, 0.8);
-  --color-select-bg: rgb(147, 173, 227);
+  --color-card-active: #405b46;
+  --color-sub-text: #a8b9a8;
+  --color-main-text: #dbe6d9;
+  --color-select-bg: #a5c99d;
+  --color-link: #b0d2a5;
+  --color-translate-main: #e7efe2;
+  --color-translate-second: #a8b9a8;
+  --color-input-border: #506a55;
 
-  --bg-history: rgb(43, 45, 48);
-  --color-item-border: rgb(41, 41, 41);
+  --bg-history: #263b2f;
+  --color-item-border: #42594a;
 
-  --color-tooltip-bg: #35373a;
+  --color-tooltip-bg: #304638;
   --color-font-2: rgba(255, 255, 255, 0.5);
   --color-font-3: rgba(255, 255, 255, 0.3);
 
@@ -104,24 +108,24 @@ html.dark {
   --color-scrollbar: rgb(92, 93, 94);
 
   --color-input-color: white;
-  --color-input-bg: var(--color-third);
+  --color-input-bg: #1c3025;
 
-  --color-textarea-bg: rgb(43, 45, 48);
+  --color-textarea-bg: #263b2f;
   --color-article: white;
 
-  --color-progress-bar: rgb(73, 77, 82) !important;
+  --color-progress-bar: #405a47 !important;
 
   --color-label-bg: rgb(10, 10, 10);
 
   --color-card-bg: var(--color-second);
   --color-primary2: var(--color-second);
 
-  --bg-card-primary: rgb(30, 31, 34);
-  --bg-card-secend: rgb(43, 45, 48);
+  --bg-card-primary: #1c3025;
+  --bg-card-secend: #263b2f;
 
-  --bg-book: #35373a;
+  --bg-book: #2d4335;
 
-  --color-line: rgb(66, 66, 66);
+  --color-line: #405848;
   --book-border: var(--bg-book);
 }
 
@@ -489,4 +493,9 @@ a {
 
 .highlight-word {
   color: var(--color-select-bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-select-bg);
+  outline-offset: 3px;
 }

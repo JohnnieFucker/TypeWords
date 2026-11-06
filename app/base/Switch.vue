@@ -103,7 +103,7 @@ const ballSize = computed(() => switchHeight.value - 4)
       @apply text-black-500;
     }
     &.checked {
-      @apply bg-blue-500;
+      background: var(--color-select-bg);
       .text {
         @apply text-white;
       }
@@ -120,7 +120,7 @@ const ballSize = computed(() => switchHeight.value - 4)
       @apply text-gray-500;
     }
     &.checked {
-      @apply bg-blue-500;
+      background: var(--color-select-bg);
       .text {
         @apply text-gray-200;
       }

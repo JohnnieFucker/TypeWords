@@ -147,11 +147,13 @@ watch(
   width: 35rem;
 
   .mode-item {
-    @apply w-50% border border-blue border-solid p-2 rounded-lg cursor-pointer;
+    @apply w-50% border border-solid p-2 rounded-lg cursor-pointer;
+    border-color: var(--color-line);
   }
 
   .active {
-    @apply bg-blue color-white;
+    background: var(--color-select-bg);
+    color: var(--color-reverse-white);
   }
 }
 

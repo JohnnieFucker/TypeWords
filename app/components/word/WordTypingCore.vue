@@ -224,7 +224,7 @@ defineExpose({
 
 <style scoped lang="scss">
 .dictation {
-  border-bottom: 2px solid gray;
+  border-bottom: 2px solid var(--color-line);
 }
 
 .typing-core {
@@ -236,7 +236,7 @@ defineExpose({
 
   .input,
   .right {
-    color: rgb(22, 163, 74);
+    color: var(--color-link);
   }
 
   .wrong {

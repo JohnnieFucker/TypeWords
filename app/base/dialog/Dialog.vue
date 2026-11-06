@@ -251,6 +251,8 @@ $time: 0.3s;
   .modal {
     @apply relative overflow-hidden flex flex-col transition-all duration-300;
     background: var(--color-card-bg);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 18px 55px #17291d26;
 
     .close {
       @apply absolute right-1.2rem top-1.2rem z-999;

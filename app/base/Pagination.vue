@@ -232,7 +232,7 @@ function next() {
 
       &:focus {
         outline: none;
-        border-color: var(--el-color-primary, #409eff);
+        border-color: var(--el-color-primary, var(--color-select-bg));
       }
 
       &:disabled {

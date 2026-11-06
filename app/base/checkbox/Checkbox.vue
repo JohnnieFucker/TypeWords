@@ -57,7 +57,7 @@ function change($event) {
       left: 3px;
       width: 10px;
       height: 10px;
-      background-color: #409eff;
+      background-color: var(--color-select-bg);
       opacity: 0;
       transition: opacity 0.3s;
       border-radius: 1px;
@@ -69,7 +69,7 @@ function change($event) {
   }
 
   &:hover .checkbox-box {
-    border-color: #409eff;
+    border-color: var(--color-select-bg);
   }
 
   .checkbox-label {

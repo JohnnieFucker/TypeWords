@@ -282,13 +282,13 @@ function onSelectCell(cell: Cell) {
   }
 
   &--marked {
-    background: #409eff;
+    background: var(--color-select-bg);
     color: #fff;
     font-weight: 600;
   }
 
   &--today {
-    box-shadow: 0 0 0 2px #409eff inset;
+    box-shadow: 0 0 0 2px var(--color-select-bg) inset;
   }
 
   &--marked.cal-cell--today {

@@ -77,7 +77,7 @@ function onClick() {
       left: 50%;
       width: 5px;
       height: 5px;
-      background-color: #409eff;
+      background-color: var(--color-select-bg);
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
       transition: transform 0.2s ease-in-out;
@@ -87,11 +87,11 @@ function onClick() {
 
   &.is-checked {
     .radio__inner {
-      background-color: #409eff;
+      background-color: var(--color-select-bg);
     }
 
     .radio__label {
-      color: #409eff;
+      color: var(--color-select-bg);
     }
 
     .radio__inner::after {

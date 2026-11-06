@@ -4,7 +4,6 @@ import {
   CompareResult,
   type Dict,
   type DictResource,
-  DictType,
   getDefaultDict,
   getDefaultWord,
   IdentifyMethod,
@@ -362,22 +361,10 @@ export async function sleep(time: number) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
-export async function _getDictDataByUrl(val: DictResource, type: DictType = DictType.word): Promise<Dict> {
-  // await sleep(2000);
-  let dictResourceUrl = ENV.RESOURCE_URL + `/dicts/${val.language}/word/${val.url}`
-  if (type === DictType.article) {
-    dictResourceUrl = ENV.RESOURCE_URL + `/dicts/${val.language}/article/${val.url}`
-  }
-  let s = await fetch(resourceWrap(dictResourceUrl, val.version)).then(r => r.json())
-  if (s) {
-    //单词词典有两种类型，用article来判断
-    if (type === DictType.article) {
-      return getDefaultDict({ ...val, articles: s })
-    } else {
-      return getDefaultDict({ ...val, words: s })
-    }
-  }
-  return getDefaultDict()
+export async function _getDictDataByUrl(val: DictResource): Promise<Dict> {
+  const url = ENV.RESOURCE_URL + `/dicts/${val.language}/word/${val.url}`
+  const words = await fetch(resourceWrap(url, val.version)).then(r => r.json())
+  return words ? getDefaultDict({ ...val, words }) : getDefaultDict()
 }
 
 //从字符串里面转换为Word格式

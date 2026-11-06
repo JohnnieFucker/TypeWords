@@ -2,7 +2,6 @@ import { APP_VERSION } from '../config/env'
 import { debounce } from '../utils'
 import type { BaseState, SettingState } from '../stores'
 import { useBaseStore, useRuntimeStore, useSettingStore } from '../stores'
-import { Supabase } from '../utils/supabase'
 import { ensureHashGuardBeforeInit, useDataSyncPersistence } from './useDataSyncPersistence'
 import { SyncDataType } from '../types'
 import type { SubscriptionCallbackMutation } from 'pinia'
@@ -115,7 +114,6 @@ export function useInit() {
 
     runtimeStore.isNew = APP_VERSION.version > Number(settingStore.webAppVersion)
     // runtimeStore.isNew = true
-    runtimeStore.isError = Supabase.getStatus().status === 'error'
     window.umami?.track('host', { host: window.location.host })
   }
 
