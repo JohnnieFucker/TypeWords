@@ -22,7 +22,6 @@ import Log from '@/components/setting/Log.vue'
 import About from '@/components/About.vue'
 import CommonSetting from '@/components/setting/CommonSetting.vue'
 import FsrsSetting from '@/components/setting/FsrsSetting.vue'
-import ArticleSetting from '@/components/setting/ArticleSetting.vue'
 import WordSetting from '@/components/setting/WordSetting.vue'
 import SoundSetting from '@/components/setting/SoundSetting.vue'
 import { checkAndUpgradePracticeWordCache, PRACTICE_ARTICLE_CACHE, PRACTICE_WORD_CACHE } from '@/core/utils/cache'
@@ -60,7 +59,7 @@ useSeoMeta({
   twitterDescription: title,
 })
 
-const tabIndex = $ref(Number(route?.query?.index ?? 0))
+const tabIndex = $ref(Number(route?.query?.index ?? 0) === 3 ? 0 : Number(route?.query?.index ?? 0))
 const settingStore = useSettingStore()
 const runtimeStore = useRuntimeStore()
 const store = useBaseStore()
@@ -586,10 +585,6 @@ function disable360() {
               <IconFluentTextUnderlineDouble20Regular />
               <span>{{ $t('word_settings') }}</span>
             </div>
-            <div class="tab" :class="tabIndex === 3 && 'active'" @click="tabIndex = 3">
-              <IconFluentBookLetter20Regular />
-              <span>{{ $t('article_settings') }}</span>
-            </div>
             <div class="tab" :class="tabIndex === 4 && 'active'" @click="tabIndex = 4">
               <IconClarityVolumeUpLine />
               <span>{{ $t('sound_settings') }}</span>
@@ -624,7 +619,6 @@ function disable360() {
           <CommonSetting v-if="tabIndex === 0" />
           <FsrsSetting v-if="tabIndex === 1" />
           <WordSetting v-if="tabIndex === 2" />
-          <ArticleSetting v-if="tabIndex === 3" />
           <SoundSetting v-if="tabIndex === 4" />
 
           <div v-if="tabIndex === 5">
