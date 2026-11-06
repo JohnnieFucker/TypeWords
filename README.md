@@ -21,7 +21,7 @@ pnpm build
 pnpm start
 ```
 
-`pnpm start` 使用 `pm2.json` 启动单个守护进程，并在 Node.js 启动前读取 `.env.production`。启动命令应从项目根目录执行；系统环境变量优先于文件中的同名配置。常用管理命令：
+生产入口 `.output/server/index.mjs` 会先读取项目根目录的 `.env.production`，再加载服务，文件缺失时启动失败。通过宝塔、直接运行 Node.js 或使用 PM2 启动都会生效，不依赖启动时的工作目录。系统环境变量优先于文件中的同名配置，修改后需重启服务。`pnpm start` 使用 `pm2.json` 启动单个守护进程，该命令应从项目根目录执行。常用管理命令：
 
 ```bash
 pm2 status
@@ -37,7 +37,7 @@ pm2 stop wordsbattle
 
 需要已开通网页授权的微信公众号，并在公众号后台配置网页授权域名，按微信要求将域名验证文件放到站点根目录。开发环境编辑项目根目录的 `.env`，正式部署编辑 `.env.production`，填写 `WECHAT_APP_ID`、`WECHAT_APP_SECRET` 和 `WECHAT_CALLBACK_URL`；两个文件均已加入 `.gitignore`。如果文件不存在，可分别从 `.env.example` 和 `.env.production.example` 复制。
 
-回调地址需要是手机可访问的 HTTPS 地址，例如 `https://你的域名/api/auth/wechat/callback`；使用部署子路径时，在 `/api` 前加入子路径。生产启动命令从启动目录读取 `.env.production`，系统环境变量优先。不要提交真实密钥。电脑显示一次性二维码，手机通过微信扫码授权后，电脑建立登录会话。本机 `localhost` 无法单独完成微信授权。
+回调地址需要是手机可访问的 HTTPS 地址，例如 `https://你的域名/api/auth/wechat/callback`；使用部署子路径时，在 `/api` 前加入子路径。生产入口从项目根目录读取 `.env.production`，系统环境变量优先。不要提交真实密钥。电脑显示一次性二维码，手机通过微信扫码授权后，电脑建立登录会话。本机 `localhost` 无法单独完成微信授权。
 
 ## 仙宠玩法
 

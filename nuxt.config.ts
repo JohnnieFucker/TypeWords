@@ -6,6 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import { execSync } from 'child_process'
 import { defineNuxtConfig } from 'nuxt/config'
+import { addProductionEnvEntry } from './scripts/production-entry.mjs'
 
 let latestCommitHash = ''
 let latestCommitTime = ''
@@ -157,6 +158,9 @@ export default defineNuxtConfig({
     port: 5567,
   },
   nitro: {
+    hooks: {
+      compiled: addProductionEnvEntry,
+    },
     prerender: {
       ignore: appBaseURL === '/' ? [] : [withBaseURL('/manifest.json', appBaseURL)],
     },
