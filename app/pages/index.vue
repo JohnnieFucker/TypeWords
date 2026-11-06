@@ -106,8 +106,8 @@ onUnmounted(() => {
   <main class="welcome">
     <section class="welcome-story" aria-label="WordsBattle">
       <div class="brand">
-        <span class="brand-mark">wb<span>.</span></span
-        ><span>WORDSBATTLE</span>
+        <img class="brand-mark" :src="withAppBaseURL('/imgs/logo/wordsbattle-mark.png')" alt="" width="40" height="40" />
+        <span>WORDSBATTLE</span>
       </div>
       <div class="story-copy">
         <span class="eyebrow"><span class="eyebrow-line"></span> LEARN · GROW · BATTLE</span>
@@ -193,12 +193,14 @@ onUnmounted(() => {
   letter-spacing: 0.2em;
 }
 .brand-mark {
-  font:
-    italic 700 27px Georgia,
-    serif;
-  letter-spacing: -0.09em;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  box-sizing: border-box;
+  object-fit: contain;
+  background: #fbfaf5;
+  border-radius: 10px;
 }
-.brand-mark span,
 .note-word span {
   color: #c3d79a;
 }
